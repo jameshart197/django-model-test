@@ -5,39 +5,45 @@ from .contentmodels import *
 
 
 class CharacterDetails(models.Model):
-    race = models.ForeignKey(RaceContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="race")
-    alignment = models.ForeignKey(AlignmentContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="alignment")
-    background = models.ForeignKey(BackgroundContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="background")
-    languages = models.ForeignKey(LanguageContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="languages")  # can be multiple entries?
+    race = models.ForeignKey(SubRaceContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="CharacterSubrace")
+    alignment = models.ForeignKey(AlignmentContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="CharacterAlignment")
+    background = models.ForeignKey(BackgroundContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="CharacterBackground")
+    languages = models.ForeignKey(LanguageContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="CharacterLanguages")  # to be separate table?
     character_name = models.CharField(max_length=200)
     inspiration = models.BooleanField
     faith = models.CharField(max_length=200)
-    age = models.IntegerField(max_length=5)
+    age = models.IntegerField  # range limit 1-9999?
     height = models.CharField(max_length=4)
-    weight = models.IntegerField(max_length=4)
+    weight = models.IntegerField  # range limit 1-999
     notes = models.CharField(max_length=1000)
     backstory = models.CharField(max_length=10000)
     allies = models.CharField(max_length=200)
     enemies = models.CharField(max_length=200)
     factions_and_orgs = models.CharField(max_length=200)
-    hit_points = models.IntegerField(max_length=3)
-    armor_class = models.IntegerField(max_length=2)
+    hit_points = models.IntegerField  # range limit 1-999
+    armor_class = models.IntegerField  # range limit 1-50
+
+    def __str__(self):
+        return f'{self.character_name}'
 
 
 class CharacterSpells(models.Model):
-    character = models.ForeignKey(CharacterDetails, on_delete=models.CASCADE, related_name="character")
-    spell = models.ForeignKey(SpellsContentTable, on_delete=models.CASCADE, related_name="spell name")
+    character = models.ForeignKey(CharacterDetails, on_delete=models.CASCADE, related_name="SpellsCharacter")
+    spell = models.ForeignKey(SpellsContentTable, on_delete=models.CASCADE, related_name="CharacterSpells")
+
+    def __str__(self):
+        return f'{self.character} {self.spell}'
 
 
 class CharacterLevels(models.Model):
-    character = models.ForeignKey(CharacterDetails, on_delete=models.CASCADE, related_name="character")
-    subclass = models.ForeignKey(SubClassContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="subclass")
-    level = models.IntegerField(max_length=2)
+    character = models.ForeignKey(CharacterDetails, on_delete=models.CASCADE, related_name="LevelsCharacter")
+    subclass = models.ForeignKey(SubClassContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="LevelsSubclass")
+    level = models.IntegerField  # range limit 1-20
 
 
 class CharacterSavingThrows(models.Model):
-    character = models.ForeignKey(CharacterDetails, on_delete=models.CASCADE, related_name="character")
-    attribute = models.ForeignKey(AttributeContentTable, on_delete=models.CASCADE, related_name="governing attribute")
+    character = models.ForeignKey(CharacterDetails, on_delete=models.CASCADE, related_name="SavingThrowsCharacter")
+    attribute = models.ForeignKey(AttributeContentTable, on_delete=models.CASCADE, related_name="SavingThrowsGoverningAttribute")
 
 
 class CharacterSkillProficiencies(models.Model):
@@ -46,18 +52,15 @@ class CharacterSkillProficiencies(models.Model):
         (1, "Expertise"),
         (2, "Half-Proficiency (Bard)")
         )
-    character = models.ForeignKey(CharacterDetails, on_delete=models.CASCADE, related_name="character")
-    skill = models.ForeignKey(SkillsContentTable, on_delete=models.SET_NULL, related_name="skill")
+    character = models.ForeignKey(CharacterDetails, on_delete=models.CASCADE, related_name="SkillsCharacter")
+    skill = models.ForeignKey(SkillsContentTable, on_delete=models.CASCADE, related_name="SkillsSkill")
     proficiency_level = models.IntegerField(choices=PROFICIENCY_LEVEL)
 
 
 class CharacterAttributes(models.Model):
-    character = models.ForeignKey(CharacterDetails, on_delete=models.CASCADE, related_name="character")
-    attribute = models.ForeignKey(AttributeContentTable, on_delete=models.SET_NULL, related_name="attribute")
-    score = models.IntegerField(max_length=2)
-
-
-# Content Models
+    character = models.ForeignKey(CharacterDetails, on_delete=models.CASCADE, related_name="AttributesCharacter")
+    attribute = models.ForeignKey(AttributeContentTable, on_delete=models.CASCADE, related_name="AttributesAttribute")
+    score = models.IntegerField  # range limit 1-30
 
 
 # Link Models
@@ -65,77 +68,77 @@ class CharacterAttributes(models.Model):
 #SUBRACE
 
 class SubraceToSkillProficiencies(models.Model):
-    subrace = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="subrace")
-    skill_proficiency_granted = models.ForeignKey(SkillsContentTable, on_delete=models.CASCADE, related_name="skill granted")
+    subrace = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="SkillprofsSubrace")
+    skill_proficiency_granted = models.ForeignKey(SkillsContentTable, on_delete=models.CASCADE, related_name="SubraceSkillGranted")
 
 
 class SubraceLanguages(models.Model):
-    subrace = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="subrace")
-    language_granted = models.ForeignKey(LanguageContentTable, on_delete=models.CASCADE, related_name="language granted")
+    subrace = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="LanguagesSubrace")
+    language_granted = models.ForeignKey(LanguageContentTable, on_delete=models.CASCADE, related_name="SubraceLanguageGranted")
 
 
 class SubraceSpells(models.Model):
-    subrace = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="subrace")
-    spells_granted = models.ForeignKey(SpellsContentTable, on_delete=models.CASCADE, related_name="spells granted")
+    subrace = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="SpellsSubrace")
+    spells_granted = models.ForeignKey(SpellsContentTable, on_delete=models.CASCADE, related_name="SubraceSpellsGranted")
 
 
 class SubraceTools(models.Model):
-    subrace = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="subrace")
-    tool_proficiency_granted = models.ForeignKey(ToolContentTable, on_delete=models.CASCADE, related_name="tool proficiency granted")
+    subrace = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="ToolsSubrace")
+    tool_proficiency_granted = models.ForeignKey(ToolContentTable, on_delete=models.CASCADE, related_name="SubraceToolProficiencyGranted")
 
 
 # CLASS
 
 
 class ClassSkillProficiencies(models.Model):
-    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="class")
-    skill_proficiency_granted = models.ForeignKey(SkillsContentTable, on_delete=models.CASCADE, related_name="skill granted")
+    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="SkillProfsClass")
+    skill_proficiency_granted = models.ForeignKey(SkillsContentTable, on_delete=models.CASCADE, related_name="ClassSkillGranted")
 
 
 class ClassLanguageProficiencies(models.Model):
-    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="class")
-    language_granted = models.ForeignKey(LanguageContentTable, on_delete=models.CASCADE, related_name="language granted")
+    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="LanguagesClass")
+    language_granted = models.ForeignKey(LanguageContentTable, on_delete=models.CASCADE, related_name="ClassLanguageGranted")
 
 
 class ClassSpellsGranted(models.Model):
-    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="class")
-    spells_granted = models.ForeignKey(SpellsContentTable, on_delete=models.CASCADE, related_name="spells granted")
+    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="SpellsClass")
+    spells_granted = models.ForeignKey(SpellsContentTable, on_delete=models.CASCADE, related_name="ClassSpellsGranted")
 
 
 class ClassSavingThrows(models.Model):
-    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="class")
-    saving_throws_granted = models.ForeignKey(CharacterSavingThrows, on_delete=models.CASCADE, related_name="saving throws granted")
+    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="SavingThrowsClass")
+    saving_throws_granted = models.ForeignKey(CharacterSavingThrows, on_delete=models.CASCADE, related_name="ClassSavingThrowsGranted")
 
 
 # SUBCLASSES
 
 class SubclassSkillProficiencies(models.Model):
-    subclass = models.ForeignKey(SubClassContentTable, on_delete=models.CASCADE, related_name="subclass")
-    skill_proficiency_granted = models.ForeignKey(SkillsContentTable, on_delete=models.CASCADE, related_name="skill granted")
+    subclass = models.ForeignKey(SubClassContentTable, on_delete=models.CASCADE, related_name="SkillprofsSubclass")
+    skill_proficiency_granted = models.ForeignKey(SkillsContentTable, on_delete=models.CASCADE, related_name="SubclassSkillGranted")
 
 
 class SubclassLanguageProficiencies(models.Model):
-    subclass = models.ForeignKey(SubClassContentTable, on_delete=models.CASCADE, related_name="subclass")
-    language_granted = models.ForeignKey(LanguageContentTable, on_delete=models.CASCADE, related_name="language granted")
+    subclass = models.ForeignKey(SubClassContentTable, on_delete=models.CASCADE, related_name="LanguagesSubclass")
+    language_granted = models.ForeignKey(LanguageContentTable, on_delete=models.CASCADE, related_name="SubclassLanguageGranted")
 
 
 class SubclassSpellsGranted(models.Model):
-    subclass = models.ForeignKey(SubClassContentTable, on_delete=models.CASCADE, related_name="subclass")
-    spells_granted = models.ForeignKey(SpellsContentTable, on_delete=models.CASCADE, related_name="spells granted")
+    subclass = models.ForeignKey(SubClassContentTable, on_delete=models.CASCADE, related_name="SpellsSubclass")
+    spells_granted = models.ForeignKey(SpellsContentTable, on_delete=models.CASCADE, related_name="SubclassSpellsGranted")
 
 
 # BACKGROUND
 
 class BackgroundSkillProficiencies(models.Model):
-    background = models.ForeignKey(BackgroundContentTable, on_delete=models.CASCADE, related_name="background")
-    skill_proficiency_granted = models.ForeignKey(SkillsContentTable, on_delete=models.CASCADE, related_name="skill granted")
+    background = models.ForeignKey(BackgroundContentTable, on_delete=models.CASCADE, related_name="SkillprofsBackground")
+    skill_proficiency_granted = models.ForeignKey(SkillsContentTable, on_delete=models.CASCADE, related_name="backgroundSkillGranted")
 
 
 class BackgroundToolProficiencies(models.Model):
-    background = models.ForeignKey(BackgroundContentTable, on_delete=models.CASCADE, related_name="background")
-    tool_proficiency_granted = models.ForeignKey(ToolContentTable, on_delete=models.CASCADE, related_name="tool proficiency granted")
+    background = models.ForeignKey(BackgroundContentTable, on_delete=models.CASCADE, related_name="ToolsBackground")
+    tool_proficiency_granted = models.ForeignKey(ToolContentTable, on_delete=models.CASCADE, related_name="BackgroundToolProficiencyGranted")
 
 
 class BackgroundLanguageProficiencies(models.Model):
-    background = models.ForeignKey(BackgroundContentTable, on_delete=models.CASCADE, related_name="backgroundtolangaage")
-    language_granted = models.ForeignKey(LanguageContentTable, on_delete=models.CASCADE, related_name="background language granted")
+    background = models.ForeignKey(BackgroundContentTable, on_delete=models.CASCADE, related_name="LanguagesBackground")
+    language_granted = models.ForeignKey(LanguageContentTable, on_delete=models.CASCADE, related_name="BackgroundLanguageGranted")

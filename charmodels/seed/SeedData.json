@@ -1,0 +1,10 @@
+[
+    {
+        "model": "charmodels.racecontenttable",
+        "pk": 0,
+        "fields": {
+            "name": "Race not set",
+            "full_description": "Please select a Race"
+        }
+    }
+]
