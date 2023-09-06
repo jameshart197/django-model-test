@@ -1,0 +1,187 @@
+[
+    {
+        "model": "charmodels.characterdetails",
+        "pk": 0,
+        "fields": {
+            "race": 0,
+            "alignment": 0,
+            "background": 0,
+            "character_name": "Default Character",
+            "inspiration": false,
+            "faith": "No faith entered",
+            "age": "No age entered",
+            "height": "No height entered",
+            "weight": "No weight entered",
+            "notes": "No notes entered",
+            "backstory": "No backstory entered",
+            "allies": "No allies entered",
+            "enemies": "No enemies entered",
+            "factions_and_orgs": "No factions or organizations entered",
+            "hit_points": 12,
+            "armor_class": 10
+        }
+    },
+    {
+        "model": "charmodels.characterspells",
+        "pk": 0,
+        "fields": {
+            "character": 0,
+            "spell": 0
+        }
+    },
+    {
+        "model": "charmodels.characterlevels",
+        "pk": 0,
+        "fields": {
+            "character": 0,
+            "subclass": 0,
+            "level": 1
+        }
+    },
+    {
+        "model": "charmodels.charactersavingthrows",
+        "pk": 0,
+        "fields": {
+            "character": 0,
+            "attribute": 0
+        }
+    },
+    {
+        "model": "charmodels.characterskillproficiencies",
+        "pk": 0,
+        "fields": {
+            "character": 0,
+            "skill": 0,
+            "proficiency_level": 0
+        }
+    },
+    {
+        "model": "charmodels.characterattributes",
+        "pk": 0,
+        "fields": {
+            "character": 0,
+            "attribute": 0,
+            "score": 10
+        }
+    },
+    {
+        "model": "charmodels.subracetoskillproficiencies",
+        "pk": 0,
+        "fields": {
+            "subrace": 0,
+            "skill_proficiency_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.subracelanguages",
+        "pk": 0,
+        "fields": {
+            "subrace": 0,
+            "language_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.subracespells",
+        "pk": 0,
+        "fields": {
+            "subrace": 0,
+            "spells_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.subracetools",
+        "pk": 0,
+        "fields": {
+            "subrace": 0,
+            "tool_proficiency_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.classskillproficiencies",
+        "pk": 0,
+        "fields": {
+            "character_class": 0,
+            "skill_proficiency_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.classlanguageproficiencies",
+        "pk": 0,
+        "fields": {
+            "character_class": 0,
+            "language_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.classspellsgranted",
+        "pk": 0,
+        "fields": {
+            "character_class": 0,
+            "spells_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.classsavingthrows",
+        "pk": 0,
+        "fields": {
+            "character_class": 0,
+            "saving_throws_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.subclassskillproficiencies",
+        "pk": 0,
+        "fields": {
+            "subclass": 0,
+            "skill_proficiency_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.subclasslanguageproficiencies",
+        "pk": 0,
+        "fields": {
+            "subclass": 0,
+            "language_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.subclassspellsgranted",
+        "pk": 0,
+        "fields": {
+            "subclass": 0,
+            "spells_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.backgroundskillproficiencies",
+        "pk": 0,
+        "fields": {
+            "background": 0,
+            "skill_proficiency_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.backgroundtoolproficiencies",
+        "pk": 0,
+        "fields": {
+            "background": 0,
+            "tool_proficiency_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.backgroundlanguageproficiencies",
+        "pk": 0,
+        "fields": {
+            "background": 0,
+            "language_granted": 0
+        }
+    },
+    {
+        "model": "charmodels.characterlanguages",
+        "pk": 0,
+        "fields": {
+            "character": 0,
+            "language_granted": 0
+        }
+    }
+]

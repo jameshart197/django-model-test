@@ -7,7 +7,10 @@ class AttributeContentTable(models.Model):
     full_description = models.CharField(max_length=400)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'ID: {self.id} - {self.name}'
+
+    class Meta:
+        verbose_name = 'Attribute'
 
 
 class SkillsContentTable(models.Model):
@@ -17,7 +20,10 @@ class SkillsContentTable(models.Model):
     full_description = models.CharField(max_length=400)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'ID: {self.id} - {self.name}'
+
+    class Meta:
+        verbose_name = 'Skill'
 
 
 class RaceContentTable(models.Model):
@@ -25,7 +31,10 @@ class RaceContentTable(models.Model):
     full_description = models.CharField(max_length=400)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'ID: {self.id} - {self.name}'
+
+    class Meta:
+        verbose_name = 'Race'
 
 
 class SubRaceContentTable(models.Model):
@@ -34,7 +43,10 @@ class SubRaceContentTable(models.Model):
     full_description = models.CharField(max_length=400)
 
     def __str__(self):
-        return f'{self.name} {self.race}'
+        return f'ID: {self.id} - {self.name} {self.race}'
+
+    class Meta:
+        verbose_name = 'Subrace'
 
 
 class SpellsContentTable(models.Model):
@@ -49,12 +61,15 @@ class SpellsContentTable(models.Model):
         (7, "Verbal, Somatic and Material")
         )
     name = models.CharField(max_length=200)
-    spell_level = models.IntegerField   # range limit 1-9
+    spell_level = models.IntegerField(default=1)   # range limit 1-9
     full_description = models.CharField(max_length=1000)
     spell_reqs = models.IntegerField(choices=SPELL_REQUIREMENTS, default=0)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'ID: {self.id} - {self.name}'
+
+    class Meta:
+        verbose_name = 'Spell'
 
 
 class ClassContentTable(models.Model):
@@ -62,7 +77,10 @@ class ClassContentTable(models.Model):
     full_description = models.CharField(max_length=400)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'ID: {self.id} - {self.name}'
+
+    class Meta:
+        verbose_name = 'Class'
 
 
 class SubClassContentTable(models.Model):
@@ -71,7 +89,10 @@ class SubClassContentTable(models.Model):
     full_description = models.CharField(max_length=400)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'ID: {self.id} - {self.name}'
+
+    class Meta:
+        verbose_name = 'Subclass'
 
 
 class LanguageContentTable(models.Model):
@@ -79,7 +100,10 @@ class LanguageContentTable(models.Model):
     full_description = models.CharField(max_length=400)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'ID: {self.id} - {self.name}'
+
+    class Meta:
+        verbose_name = 'Language'
 
 
 class BackgroundContentTable(models.Model):
@@ -88,7 +112,10 @@ class BackgroundContentTable(models.Model):
     feature = models.CharField(max_length=500)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'ID: {self.id} - {self.name}'
+
+    class Meta:
+        verbose_name = 'Background'
 
 
 class AlignmentContentTable(models.Model):
@@ -96,7 +123,10 @@ class AlignmentContentTable(models.Model):
     full_description = models.CharField(max_length=400)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'ID: {self.id} - {self.name}'
+
+    class Meta:
+        verbose_name = 'Alignment'
 
 
 class ToolContentTable(models.Model):
@@ -104,4 +134,7 @@ class ToolContentTable(models.Model):
     full_description = models.CharField(max_length=1000)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'ID: {self.id} - {self.name}'
+
+    class Meta:
+        verbose_name = 'Tool'

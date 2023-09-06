@@ -1,0 +1,97 @@
+[
+    {
+        "model": "charmodels.attributecontenttable",
+        "fields": {
+            "name": "Attribute not set",
+            "shortname": "NA",
+            "full_description": "No Attribute has been chosen. This could mean that your chosen skill or saving throw has no governing attribute or that the attribute you were seeking could not be found."
+        }
+    },
+    {
+        "model": "charmodels.skillscontenttable",
+        "pk": 0,
+        "fields": {
+            "attribute": "0",
+            "name": "No Skill Selected",
+            "shortname": "NA",
+            "full_description": "Please select a Skill"
+        }
+    },
+    {
+        "model": "charmodels.racecontenttable",
+        "pk": 0,
+        "fields": {
+            "name": "Race not set",
+            "full_description": "Please select a Race"
+        }
+    },
+    {
+        "model": "charmodels.subracecontenttable",
+        "pk": 0,
+        "fields": {
+            "race": "0",
+            "name": "No Subrace Selected",
+            "full_description": "Please select a Subrace"
+        }
+    },
+    {
+        "model": "charmodels.spellscontenttable",
+        "pk": 0,
+        "fields": {
+            "name": "No Spell Selected",
+            "spell_level": "1",
+            "full_description": "Please select a Spell",
+            "spell_reqs": 0
+        }
+    },
+    {
+        "model": "charmodels.classcontenttable",
+        "pk": 0,
+        "fields": {
+            "name": "No Class Selected",
+            "full_description": "Please select a Class"
+        }
+    },
+    {
+        "model": "charmodels.subclasscontenttable",
+        "pk": 0,
+        "fields": {
+            "parent_class": 0,
+            "name": "No Subclass Selected",
+            "full_description": "Please select a Subclass"
+        }
+    },
+    {
+        "model": "charmodels.languagecontenttable",
+        "pk": 0,
+        "fields": {
+            "name": "No language Selected",
+            "full_description": "Please select a language"
+        }
+    },
+    {
+        "model": "charmodels.backgroundcontenttable",
+        "pk": 0,
+        "fields": {
+            "name": "No background Selected",
+            "full_description": "Please select a background",
+            "feature": "No Background Selected"
+        }
+    },
+    {
+        "model": "charmodels.alignmentcontenttable",
+        "pk": 0,
+        "fields": {
+            "name": "No alignment Selected",
+            "full_description": "Please select a alignment"
+        }
+    },
+    {
+        "model": "charmodels.toolcontenttable",
+        "pk": 0,
+        "fields": {
+            "name": "No tool Selected",
+            "full_description": "Please select a tool"
+        }
+    }
+]
