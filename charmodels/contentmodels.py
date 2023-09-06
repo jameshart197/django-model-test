@@ -17,7 +17,7 @@ class SkillsContentTable(models.Model):
     attribute = models.ForeignKey(AttributeContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="SkillsGoverningAttribute")
     name = models.CharField(max_length=50)
     shortname = models.CharField(max_length=5)
-    full_description = models.CharField(max_length=400)
+    full_description = models.CharField(max_length=4000)
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -27,8 +27,8 @@ class SkillsContentTable(models.Model):
 
 
 class RaceContentTable(models.Model):
-    name = models.CharField(max_length=50)
-    full_description = models.CharField(max_length=400)
+    name = models.CharField(max_length=200)
+    full_description = models.CharField(max_length=5000)
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -39,8 +39,8 @@ class RaceContentTable(models.Model):
 
 class SubRaceContentTable(models.Model):
     race = models.ForeignKey(RaceContentTable, on_delete=models.CASCADE, default=0, related_name="SubraceParentRace")
-    name = models.CharField(max_length=50)
-    full_description = models.CharField(max_length=400)
+    name = models.CharField(max_length=200)
+    full_description = models.CharField(max_length=5000)
 
     def __str__(self):
         return f'ID: {self.id} - {self.name} {self.race}'
@@ -62,7 +62,7 @@ class SpellsContentTable(models.Model):
         )
     name = models.CharField(max_length=200)
     spell_level = models.IntegerField(default=1)   # range limit 1-9
-    full_description = models.CharField(max_length=1000)
+    full_description = models.CharField(max_length=3000)
     spell_reqs = models.IntegerField(choices=SPELL_REQUIREMENTS, default=0)
 
     def __str__(self):
@@ -73,31 +73,31 @@ class SpellsContentTable(models.Model):
 
 
 class ClassContentTable(models.Model):
-    name = models.CharField(max_length=50)
-    full_description = models.CharField(max_length=400)
+    name = models.CharField(max_length=200)
+    full_description = models.CharField(max_length=5000)
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
 
     class Meta:
-        verbose_name = 'Class'
+        verbose_name = 'Class Choice'
 
 
 class SubClassContentTable(models.Model):
     parent_class = models.ForeignKey(ClassContentTable, on_delete=models.CASCADE, related_name="SubclassParentClass")
-    name = models.CharField(max_length=50)
-    full_description = models.CharField(max_length=400)
+    name = models.CharField(max_length=200)
+    full_description = models.CharField(max_length=5000)
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
 
     class Meta:
-        verbose_name = 'Subclass'
+        verbose_name = 'Subclass Choice'
 
 
 class LanguageContentTable(models.Model):
-    name = models.CharField(max_length=50)
-    full_description = models.CharField(max_length=400)
+    name = models.CharField(max_length=200)
+    full_description = models.CharField(max_length=4000)
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -107,9 +107,9 @@ class LanguageContentTable(models.Model):
 
 
 class BackgroundContentTable(models.Model):
-    name = models.CharField(max_length=50)
-    full_description = models.CharField(max_length=1000)
-    feature = models.CharField(max_length=500)
+    name = models.CharField(max_length=200)
+    full_description = models.CharField(max_length=3000)
+    feature = models.CharField(max_length=1000)
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -120,7 +120,7 @@ class BackgroundContentTable(models.Model):
 
 class AlignmentContentTable(models.Model):
     name = models.CharField(max_length=100)
-    full_description = models.CharField(max_length=400)
+    full_description = models.CharField(max_length=4000)
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -130,8 +130,8 @@ class AlignmentContentTable(models.Model):
 
 
 class ToolContentTable(models.Model):
-    name = models.CharField(max_length=50)
-    full_description = models.CharField(max_length=1000)
+    name = models.CharField(max_length=200)
+    full_description = models.CharField(max_length=10000)
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
