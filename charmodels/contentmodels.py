@@ -60,8 +60,20 @@ class SpellsContentTable(models.Model):
         (6, "Somatic and Material"),
         (7, "Verbal, Somatic and Material")
         )
+    SPELL_LEVELS = (
+        (0, "Cantrip"),
+        (1, "1st"),
+        (2, "2nd"),
+        (3, "3rd"),
+        (4, "4th"),
+        (5, "5th"),
+        (6, "6th"),
+        (7, "7th"),
+        (8, "8th"),
+        (9, "9th")
+        )
     name = models.CharField(max_length=200)
-    spell_level = models.IntegerField(default=1)   # range limit 1-9
+    spell_level = models.IntegerField(choices=SPELL_LEVELS, default=0)
     full_description = models.CharField(max_length=3000)
     spell_reqs = models.IntegerField(choices=SPELL_REQUIREMENTS, default=0)
 
@@ -84,7 +96,7 @@ class ClassContentTable(models.Model):
 
 
 class SubClassContentTable(models.Model):
-    parent_class = models.ForeignKey(ClassContentTable, on_delete=models.CASCADE, related_name="SubclassParentClass")
+    parent_class = models.ForeignKey(ClassContentTable, on_delete=models.CASCADE, default=0, related_name="SubclassParentClass")
     name = models.CharField(max_length=200)
     full_description = models.CharField(max_length=5000)
 
@@ -138,3 +150,14 @@ class ToolContentTable(models.Model):
 
     class Meta:
         verbose_name = 'Tool'
+        
+
+class InstrumentContentTable(models.Model):
+    name = models.CharField(max_length=200)
+    full_description = models.CharField(max_length=10000)
+
+    def __str__(self):
+        return f'ID: {self.id} - {self.name}'
+
+    class Meta:
+        verbose_name = 'Musical Instrument'

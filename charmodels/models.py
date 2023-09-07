@@ -14,11 +14,11 @@ class CharacterDetails(models.Model):
     age = models.CharField(max_length=24, blank=True) 
     height = models.CharField(max_length=24, blank=True)
     weight = models.CharField(max_length=24, blank=True)  
-    notes = models.CharField(max_length=1000)
-    backstory = models.CharField(max_length=10000)
-    allies = models.CharField(max_length=200)
-    enemies = models.CharField(max_length=200)
-    factions_and_orgs = models.CharField(max_length=200)
+    notes = models.CharField(max_length=1000, blank=True)
+    backstory = models.CharField(max_length=10000, blank=True)
+    allies = models.CharField(max_length=200, blank=True)
+    enemies = models.CharField(max_length=200, blank=True)
+    factions_and_orgs = models.CharField(max_length=200, blank=True)
     hit_points = models.IntegerField(default=12)
     armor_class = models.IntegerField(default=10)
 
@@ -142,7 +142,7 @@ class SubraceTools(models.Model):
 
 
 class ClassSkillProficiencies(models.Model):
-    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="SkillProfsClass")
+    character_class = models.ForeignKey(ClassContentTable, on_delete=models.CASCADE, related_name="SkillProfsClass")
     skill_proficiency_granted = models.ForeignKey(SkillsContentTable, on_delete=models.CASCADE, related_name="ClassSkillGranted")
 
     def __str__(self):
@@ -153,7 +153,7 @@ class ClassSkillProficiencies(models.Model):
 
 
 class ClassLanguageProficiencies(models.Model):
-    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="LanguagesClass")
+    character_class = models.ForeignKey(ClassContentTable, on_delete=models.CASCADE, related_name="LanguagesClass")
     language_granted = models.ForeignKey(LanguageContentTable, on_delete=models.CASCADE, related_name="ClassLanguageGranted")
 
     def __str__(self):
@@ -164,7 +164,7 @@ class ClassLanguageProficiencies(models.Model):
 
 
 class ClassSpellsGranted(models.Model):
-    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="SpellsClass")
+    character_class = models.ForeignKey(ClassContentTable, on_delete=models.CASCADE, related_name="SpellsClass")
     spells_granted = models.ForeignKey(SpellsContentTable, on_delete=models.CASCADE, related_name="ClassSpellsGranted")
 
     def __str__(self):
@@ -175,8 +175,8 @@ class ClassSpellsGranted(models.Model):
 
 
 class ClassSavingThrows(models.Model):
-    character_class = models.ForeignKey(SubRaceContentTable, on_delete=models.CASCADE, related_name="SavingThrowsClass")
-    saving_throws_granted = models.ForeignKey(CharacterSavingThrows, on_delete=models.CASCADE, related_name="ClassSavingThrowsGranted")
+    character_class = models.ForeignKey(ClassContentTable, on_delete=models.CASCADE, related_name="SavingThrowsClass")
+    saving_throws_granted = models.ForeignKey(AttributeContentTable, on_delete=models.CASCADE, related_name="ClassSavingThrowsGranted")
 
     def __str__(self):
         return f'ID: {self.id} - {self.character_class.name} - {self.saving_throws_granted.name}'

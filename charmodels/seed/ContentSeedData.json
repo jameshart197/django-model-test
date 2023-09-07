@@ -93,5 +93,13 @@
             "name": "No tool Selected",
             "full_description": "Please select a tool"
         }
+    },
+    {
+        "model": "charmodels.instrumentcontenttable",
+        "pk": 0,
+        "fields": {
+            "name": "No instrument Selected",
+            "full_description": "Please select an instrument"
+        }
     }
 ]
