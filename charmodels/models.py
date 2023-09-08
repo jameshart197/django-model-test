@@ -1,10 +1,12 @@
 from django.db import models
 from .contentmodels import *
+from django.contrib.auth.models import User
 
 # top level models
 
 
 class CharacterDetails(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     race = models.ForeignKey(SubRaceContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="CharacterSubrace")
     alignment = models.ForeignKey(AlignmentContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="CharacterAlignment")
     background = models.ForeignKey(BackgroundContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="CharacterBackground")
