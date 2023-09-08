@@ -6,21 +6,21 @@ from django.contrib.auth.models import User
 
 
 class CharacterDetails(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    race = models.ForeignKey(SubRaceContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="CharacterSubrace")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    subrace = models.ForeignKey(SubRaceContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="CharacterSubrace")
     alignment = models.ForeignKey(AlignmentContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="CharacterAlignment")
     background = models.ForeignKey(BackgroundContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="CharacterBackground")
     character_name = models.CharField(max_length=200)
     inspiration = models.BooleanField(default=False)
-    faith = models.CharField(max_length=200, blank=True)
+    faith = models.TextField(blank=True)
     age = models.CharField(max_length=24, blank=True) 
     height = models.CharField(max_length=24, blank=True)
     weight = models.CharField(max_length=24, blank=True)  
-    notes = models.CharField(max_length=1000, blank=True)
-    backstory = models.CharField(max_length=10000, blank=True)
-    allies = models.CharField(max_length=200, blank=True)
-    enemies = models.CharField(max_length=200, blank=True)
-    factions_and_orgs = models.CharField(max_length=200, blank=True)
+    notes = models.TextField(blank=True)
+    backstory = models.TextField(blank=True)
+    allies = models.TextField(blank=True)
+    enemies = models.TextField(blank=True)
+    factions_and_orgs = models.TextField(blank=True)
     hit_points = models.IntegerField(default=12)
     armor_class = models.IntegerField(default=10)
 
@@ -44,7 +44,7 @@ class CharacterSpells(models.Model):
 
 class CharacterLevels(models.Model):
     character = models.ForeignKey(CharacterDetails, on_delete=models.CASCADE, related_name="LevelsCharacter")
-    subclass = models.ForeignKey(SubClassContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="LevelsSubclass")
+    char_class = models.ForeignKey(ClassContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="LevelsClass")
     level = models.IntegerField(default=1)  # range limit 1-20
 
     def __str__(self):
@@ -175,16 +175,6 @@ class ClassSpellsGranted(models.Model):
     class Meta:
         verbose_name = 'Class Granted Spell'
 
-
-class ClassSavingThrows(models.Model):
-    character_class = models.ForeignKey(ClassContentTable, on_delete=models.CASCADE, related_name="SavingThrowsClass")
-    saving_throws_granted = models.ForeignKey(AttributeContentTable, on_delete=models.CASCADE, related_name="ClassSavingThrowsGranted")
-
-    def __str__(self):
-        return f'ID: {self.id} - {self.character_class.name} - {self.saving_throws_granted.name}'
-
-    class Meta:
-        verbose_name = 'Class Granted Saving Throw'
 
 
 # SUBCLASSES

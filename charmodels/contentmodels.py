@@ -4,7 +4,7 @@ from django.db import models
 class AttributeContentTable(models.Model):
     name = models.CharField(max_length=50)
     shortname = models.CharField(max_length=5)
-    full_description = models.CharField(max_length=400)
+    full_description = models.TextField()
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -17,7 +17,7 @@ class SkillsContentTable(models.Model):
     attribute = models.ForeignKey(AttributeContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="SkillsGoverningAttribute")
     name = models.CharField(max_length=50)
     shortname = models.CharField(max_length=5)
-    full_description = models.CharField(max_length=4000)
+    full_description = models.TextField()
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -28,7 +28,8 @@ class SkillsContentTable(models.Model):
 
 class RaceContentTable(models.Model):
     name = models.CharField(max_length=200)
-    full_description = models.CharField(max_length=5000)
+    full_description = models.TextField()
+    features = models.TextField(default="I am blank")
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -40,7 +41,8 @@ class RaceContentTable(models.Model):
 class SubRaceContentTable(models.Model):
     race = models.ForeignKey(RaceContentTable, on_delete=models.CASCADE, default=0, related_name="SubraceParentRace")
     name = models.CharField(max_length=200)
-    full_description = models.CharField(max_length=5000)
+    full_description = models.TextField()
+    features = models.TextField(default="I am currently blank")
 
     def __str__(self):
         return f'ID: {self.id} - {self.name} {self.race}'
@@ -74,7 +76,7 @@ class SpellsContentTable(models.Model):
         )
     name = models.CharField(max_length=200)
     spell_level = models.IntegerField(choices=SPELL_LEVELS, default=0)
-    full_description = models.CharField(max_length=3000)
+    full_description = models.TextField()
     spell_reqs = models.IntegerField(choices=SPELL_REQUIREMENTS, default=0)
 
     def __str__(self):
@@ -86,8 +88,10 @@ class SpellsContentTable(models.Model):
 
 class ClassContentTable(models.Model):
     name = models.CharField(max_length=200)
-    full_description = models.CharField(max_length=5000)
-
+    full_description = models.TextField()
+    features = models.TextField(default="I am blank")
+    saving_throw_1 = models.ForeignKey(AttributeContentTable, on_delete=models.CASCADE, default=0, related_name="SavingThrow1")
+    saving_throw_2 = models.ForeignKey(AttributeContentTable, on_delete=models.CASCADE, default=0, related_name="SavingThrow2")
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
 
@@ -98,7 +102,8 @@ class ClassContentTable(models.Model):
 class SubClassContentTable(models.Model):
     parent_class = models.ForeignKey(ClassContentTable, on_delete=models.CASCADE, default=0, related_name="SubclassParentClass")
     name = models.CharField(max_length=200)
-    full_description = models.CharField(max_length=5000)
+    full_description = models.TextField()
+    features = models.TextField(default="I am blank right now")
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -109,7 +114,7 @@ class SubClassContentTable(models.Model):
 
 class LanguageContentTable(models.Model):
     name = models.CharField(max_length=200)
-    full_description = models.CharField(max_length=4000)
+    full_description = models.TextField()
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -120,8 +125,10 @@ class LanguageContentTable(models.Model):
 
 class BackgroundContentTable(models.Model):
     name = models.CharField(max_length=200)
-    full_description = models.CharField(max_length=3000)
-    feature = models.CharField(max_length=1000)
+    full_description = models.TextField()
+    feature = models.TextField()
+    skill_proficiency_1 = models.ForeignKey(SkillsContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="BackgroundSkillGranted1")
+    skill_proficiency_2 = models.ForeignKey(SkillsContentTable, on_delete=models.SET_DEFAULT, default=0, related_name="BackgroundSkillGranted2")
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -132,7 +139,7 @@ class BackgroundContentTable(models.Model):
 
 class AlignmentContentTable(models.Model):
     name = models.CharField(max_length=100)
-    full_description = models.CharField(max_length=4000)
+    full_description = models.TextField()
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -143,7 +150,7 @@ class AlignmentContentTable(models.Model):
 
 class ToolContentTable(models.Model):
     name = models.CharField(max_length=200)
-    full_description = models.CharField(max_length=10000)
+    full_description = models.TextField()
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
@@ -154,7 +161,7 @@ class ToolContentTable(models.Model):
 
 class InstrumentContentTable(models.Model):
     name = models.CharField(max_length=200)
-    full_description = models.CharField(max_length=10000)
+    full_description = models.TextField()
 
     def __str__(self):
         return f'ID: {self.id} - {self.name}'
