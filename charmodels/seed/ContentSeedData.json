@@ -1,6 +1,7 @@
 [
     {
         "model": "charmodels.attributecontenttable",
+        "pk": 0,
         "fields": {
             "name": "Attribute not set",
             "shortname": "NA",
